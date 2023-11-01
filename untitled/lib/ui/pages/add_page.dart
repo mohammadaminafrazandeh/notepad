@@ -6,12 +6,13 @@ import 'package:untitled/models/note_model.dart';
 
 // ignore: must_be_immutable
 class AddPage extends StatelessWidget {
-  AddPage({super.key});
+  const AddPage({super.key});
 
-  final Note _noteEdit = Note();
+  
   @override
   Widget build(BuildContext context) {
     return Consumer<NotesController>(builder: (_, notesController, child) {
+      final Note _noteEdit = Note();
       return Scaffold(
         body: SizedBox(
           width: double.infinity,
@@ -51,6 +52,11 @@ class AddPage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   notesController.addNotes(_noteEdit);
+                  _noteEdit.id = DateTime.now().millisecond.toString();
+                  // var ti = _noteEdit.title;
+                  // var su = _noteEdit.subtitle;
+                  // var iq = _noteEdit.id;
+                  // print('$iq');
                   context.read<BottomNavigationBarController>().setTabIndex(0);
                 },
                 style:

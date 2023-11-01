@@ -12,13 +12,20 @@ class NotesController extends ChangeNotifier {
   }
 
   removeNotes(index) {
-    _notes.removeAt(index);
+    var id = getNotes[index].id;
+    _notes.removeWhere((note) => note.id == id);
     notifyListeners();
+
   }
 
   modifyNotes(index, String? title, String? subtitle) {
-    _notes[index].title = title;
-    _notes[index].subtitle = subtitle;
+    findNotebyIDviaIndex(index).title = title;
+    findNotebyIDviaIndex(index).subtitle = subtitle;
     notifyListeners();
+  }
+
+  Note findNotebyIDviaIndex(index) {
+    var id = getNotes[index].id;
+    return _notes.firstWhere((note) => note.id == id);
   }
 }

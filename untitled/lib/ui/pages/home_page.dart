@@ -5,23 +5,23 @@ import 'package:untitled/models/note_model.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
-
-  Note note = Note();
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Consumer<NotesController>(builder: (_, noteController, child) {
+      Note note = Note();
       return Scaffold(
         body: noteController.getNotes.isEmpty
             ? const Center(child: Text('Enter somthing in other page...'))
             : ListView.builder(
                 itemCount: noteController.getNotes.length,
                 itemBuilder: (context, index) {
+                  Note desiredNote = noteController.findNotebyIDviaIndex(index);
                   return ListTile(
-                    title: Text(noteController.getNotes[index].title ??
-                        'no entrance recorded for title'),
-                    subtitle: Text(noteController.getNotes[index].subtitle ??
+                    title: Text(
+                        desiredNote.title ?? 'no entrance recorded for title'),
+                    subtitle: Text(desiredNote.subtitle ??
                         'no entrance recorded for subtitle'),
                     onLongPress: () {
                       showDialog(
@@ -56,6 +56,7 @@ class HomePage extends StatelessWidget {
                                     onPressed: () {
                                       noteController.modifyNotes(
                                           index, note.title, note.subtitle);
+
                                       Navigator.pop(context);
                                     },
                                     style: ElevatedButton.styleFrom(
